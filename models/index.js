@@ -23,5 +23,6 @@ db.categories = require("./category.js")(sequelize, Sequelize);
 db.users = require("./user.js")(sequelize, Sequelize);
 db.authors = require("./author.js")(sequelize, Sequelize);
 db.publishers = require("./publisher.js")(sequelize, Sequelize);
+db.books = require("./book.js")(sequelize, Sequelize);
 
 module.exports = db;
