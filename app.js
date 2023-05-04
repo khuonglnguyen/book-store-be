@@ -5,6 +5,7 @@ const formidable = require("express-formidable");
 const { Auth } = require("./middlewares/auth");
 const auth = require("./routes/auth");
 const category = require("./routes/category");
+const author = require("./routes/author");
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use("/api/v1/auth", auth);
 // Auth
 app.use(Auth);
 app.use("/api/v1/category", category);
+app.use("/api/v1/author", author);
 
 module.exports = app;
