@@ -7,6 +7,7 @@ const auth = require("./routes/auth");
 const category = require("./routes/category");
 const author = require("./routes/author");
 const publisher = require("./routes/publisher");
+const book = require("./routes/book");
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use(Auth);
 app.use("/api/v1/category", category);
 app.use("/api/v1/author", author);
 app.use("/api/v1/publisher", publisher);
+app.use("/api/v1/book", book);
 
 module.exports = app;
