@@ -22,7 +22,11 @@ function initModels(sequelize) {
     foreignKey: "author_id",
     onDelete: "cascade",
   });
-  order_detail.belongsTo(book, { as: "book", foreignKey: "book_id" });
+  order_detail.belongsTo(book, {
+    as: "book",
+    foreignKey: "book_id",
+    onDelete: "cascade",
+  });
   book.hasMany(order_detail, { as: "order_details", foreignKey: "book_id" });
   book.belongsTo(category, { as: "category", foreignKey: "category_id" });
   category.hasMany(book, {
@@ -30,7 +34,11 @@ function initModels(sequelize) {
     foreignKey: "category_id",
     onDelete: "cascade",
   });
-  order_detail.belongsTo(order, { as: "order", foreignKey: "order_id" });
+  order_detail.belongsTo(order, {
+    as: "order",
+    foreignKey: "order_id",
+    onDelete: "cascade",
+  });
   order.hasMany(order_detail, { as: "order_details", foreignKey: "order_id" });
   book.belongsTo(publisher, { as: "publisher", foreignKey: "publisher_id" });
   publisher.hasMany(book, {
