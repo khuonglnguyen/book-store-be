@@ -74,7 +74,20 @@ const Regist = async (data, files) => {
   }
 };
 
+const GetTokenInfo = async (auth, secret) => {
+  if (auth.authorization && auth.authorization.split(" ")[0] === "Bearer") {
+    const token = auth.authorization.split(" ")[1];
+    let decode = "";
+    if (token) {
+      decode = jwt.verify(token, secret);
+    }
+    return decode;
+  }
+  return;
+};
+
 module.exports = {
   Login,
   Regist,
+  GetTokenInfo,
 };
