@@ -17,7 +17,11 @@ function initModels(sequelize) {
   var user = _user(sequelize, DataTypes);
 
   book.belongsTo(author, { as: "author", foreignKey: "author_id" });
-  author.hasMany(book, { as: "books", foreignKey: "author_id" });
+  author.hasMany(book, {
+    as: "books",
+    foreignKey: "author_id",
+    onDelete: "cascade",
+  });
   order_detail.belongsTo(book, { as: "book", foreignKey: "book_id" });
   book.hasMany(order_detail, { as: "order_details", foreignKey: "book_id" });
   book.belongsTo(category, { as: "category", foreignKey: "category_id" });
@@ -29,7 +33,11 @@ function initModels(sequelize) {
   order_detail.belongsTo(order, { as: "order", foreignKey: "order_id" });
   order.hasMany(order_detail, { as: "order_details", foreignKey: "order_id" });
   book.belongsTo(publisher, { as: "publisher", foreignKey: "publisher_id" });
-  publisher.hasMany(book, { as: "books", foreignKey: "publisher_id" });
+  publisher.hasMany(book, {
+    as: "books",
+    foreignKey: "publisher_id",
+    onDelete: "cascade",
+  });
   order.belongsTo(user, { as: "user", foreignKey: "user_id" });
   user.hasMany(order, { as: "orders", foreignKey: "user_id" });
 
