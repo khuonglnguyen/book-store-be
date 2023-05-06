@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
       },
     });
   } else {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: "Error!",
     });
@@ -35,7 +35,7 @@ router.get("/:id", async (req, res, next) => {
       data: result,
     });
   } else {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: "Error!",
     });
