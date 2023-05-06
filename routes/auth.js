@@ -10,7 +10,7 @@ router.post("/login", async (req, res, next) => {
       data: result,
     });
   } else {
-    res.status(401).json({
+    res.status(200).json({
       success: false,
       message: "Phone number or password is incorrect!",
     });
@@ -24,7 +24,7 @@ router.post("/regist", async (req, res, next) => {
       success: true,
     });
   } else {
-    res.status(401).json({
+    res.status(200).json({
       success: false,
       message: "Error!",
     });
