@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors')
 const cookieParser = require("cookie-parser");
 const formidable = require("express-formidable");
 
@@ -11,6 +12,7 @@ const book = require("./routes/book");
 const order = require("./routes/order");
 
 const app = express();
+app.use(cors())
 
 app.use(formidable());
 app.use(cookieParser());
