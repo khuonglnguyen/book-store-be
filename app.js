@@ -10,9 +10,12 @@ const author = require("./routes/author");
 const publisher = require("./routes/publisher");
 const book = require("./routes/book");
 const order = require("./routes/order");
+const home = require("./routes/home");
 
 const app = express();
-app.use(cors())
+app.use(cors({
+    origin: '*'
+}));
 
 app.use(formidable());
 app.use(cookieParser());
@@ -21,6 +24,7 @@ const db = require("./models");
 db.sequelize.sync();
 
 app.use("/api/v1/auth", auth);
+app.use("/api/v1/home", home);
 // Auth
 app.use(Auth);
 app.use("/api/v1/category", category);
