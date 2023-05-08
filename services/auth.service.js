@@ -17,7 +17,7 @@ const Login = async (phone_number, password) => {
 
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-      const { id, fullname, avatar } = user;
+      const { user_id, fullname, avatar } = user;
       // Get jwt configuration
       const {
         jwt: { secret },
@@ -25,13 +25,13 @@ const Login = async (phone_number, password) => {
       // Generate token
       const token = jwt.sign(
         {
-          id,
+          user_id,
           fullname,
           avatar,
         },
         secret
       );
-      return { id, fullname, avatar, token };
+      return { user_id, fullname, avatar, token };
     }
   } catch (error) {
     console.log(error);
