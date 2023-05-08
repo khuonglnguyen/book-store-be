@@ -82,12 +82,13 @@ const Update = async (id, data, files) => {
       cloudinary,
     } = config;
     const hash = await bcrypt.hash(password, saltRounds);
+    let user;
 
     if (files.avatar) {
       cloudinaryv2.config(cloudinary);
       const result = await cloudinaryv2.uploader.upload(files.avatar.path);
       if (result) {
-        const user = await users.update(
+        user = await users.update(
           {
             fullname,
             phone_number,
@@ -101,13 +102,11 @@ const Update = async (id, data, files) => {
         if (!user) {
           return false;
         }
-
-        return true;
       } else {
         return false;
       }
     } else {
-      const user = await users.update(
+      user = await users.update(
         {
           fullname,
           phone_number,
@@ -120,9 +119,29 @@ const Update = async (id, data, files) => {
       if (!user) {
         return false;
       }
-
-      return true;
     }
+
+    user = await users.findByPk(id)
+
+    // Get jwt configuration
+    const {
+      jwt: { secret },
+    } = config;
+    // Generate token
+    const token = jwt.sign(
+      {
+        user_id: user.user_id,
+        fullname: user.fullname,
+        avatar: user.avatar,
+      },
+      secret
+    );
+    return {
+      user_id: user.user_id,
+      fullname: user.fullname,
+      avatar: user.avatar,
+      token,
+    };
   } catch (error) {
     console.log(error);
     return false;
