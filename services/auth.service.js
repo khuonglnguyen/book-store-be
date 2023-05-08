@@ -74,6 +74,61 @@ const Regist = async (data, files) => {
   }
 };
 
+const Update = async (id, data, files) => {
+  try {
+    const { fullname, phone_number, password, address, state_code } = data;
+    const {
+      bcrypt: { saltRounds },
+      cloudinary,
+    } = config;
+    const hash = await bcrypt.hash(password, saltRounds);
+
+    if (files.avatar) {
+      cloudinaryv2.config(cloudinary);
+      const result = await cloudinaryv2.uploader.upload(files.avatar.path);
+      if (result) {
+        const user = await users.update(
+          {
+            fullname,
+            phone_number,
+            password: hash,
+            address,
+            avatar: result.url,
+            state_code,
+          },
+          { where: { user_id: id } }
+        );
+        if (!user) {
+          return false;
+        }
+
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      const user = await users.update(
+        {
+          fullname,
+          phone_number,
+          password: hash,
+          address,
+          state_code,
+        },
+        { where: { user_id: id } }
+      );
+      if (!user) {
+        return false;
+      }
+
+      return true;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 const GetTokenInfo = async (auth, secret) => {
   if (auth.authorization && auth.authorization.split(" ")[0] === "Bearer") {
     const token = auth.authorization.split(" ")[1];
@@ -90,4 +145,5 @@ module.exports = {
   Login,
   Regist,
   GetTokenInfo,
+  Update,
 };
