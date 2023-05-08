@@ -37,6 +37,7 @@ router.put("/update/:id", async (req, res, next) => {
   if (result) {
     res.status(201).json({
       success: true,
+      data: result
     });
   } else {
     res.status(200).json({
