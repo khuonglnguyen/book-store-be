@@ -1,5 +1,5 @@
 var express = require("express");
-const { Login, Regist } = require("../services/auth.service");
+const { Login, Regist, Update } = require("../services/auth.service");
 var router = express.Router();
 
 router.post("/login", async (req, res, next) => {
@@ -19,6 +19,21 @@ router.post("/login", async (req, res, next) => {
 
 router.post("/regist", async (req, res, next) => {
   const result = await Regist(req.fields, req.files);
+  if (result) {
+    res.status(201).json({
+      success: true,
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "Error!",
+    });
+  }
+});
+
+router.put("/update/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const result = await Update(id, req.fields, req.files);
   if (result) {
     res.status(201).json({
       success: true,
