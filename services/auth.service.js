@@ -17,7 +17,7 @@ const Login = async (phone_number, password) => {
 
     const match = await bcrypt.compare(password, user.password);
     if (match) {
-      const { user_id, fullname, avatar } = user;
+      const { user_id, fullname, avatar, phone_number, address } = user;
       // Get jwt configuration
       const {
         jwt: { secret },
@@ -28,10 +28,12 @@ const Login = async (phone_number, password) => {
           user_id,
           fullname,
           avatar,
+          phone_number,
+          address,
         },
         secret
       );
-      return { user_id, fullname, avatar, token };
+      return { user_id, fullname, phone_number, address, avatar, token };
     }
   } catch (error) {
     console.log(error);
@@ -121,7 +123,7 @@ const Update = async (id, data, files) => {
       }
     }
 
-    user = await users.findByPk(id)
+    user = await users.findByPk(id);
 
     // Get jwt configuration
     const {
@@ -133,6 +135,8 @@ const Update = async (id, data, files) => {
         user_id: user.user_id,
         fullname: user.fullname,
         avatar: user.avatar,
+        phone_number: user.phone_number,
+        address: user.address,
       },
       secret
     );
@@ -140,6 +144,8 @@ const Update = async (id, data, files) => {
       user_id: user.user_id,
       fullname: user.fullname,
       avatar: user.avatar,
+      phone_number: user.phone_number,
+      address: user.address,
       token,
     };
   } catch (error) {
