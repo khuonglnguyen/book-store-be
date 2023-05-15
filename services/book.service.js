@@ -114,6 +114,63 @@ const update = async (id, data, files) => {
   return true;
 };
 
+const addView = async (id) => {
+  try {
+    const book = await books.findByPk(id);
+    book.dataValues.view += 1;
+    const bookUpdate = await books.update(
+      {
+        view: book.dataValues.view,
+      },
+      { where: { book_id: id } }
+    );
+    if (!bookUpdate) {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return true;
+};
+
+const addLove = async (id) => {
+  try {
+    const book = await books.findByPk(id);
+    book.dataValues.love += 1;
+    const bookUpdate = await books.update(
+      {
+        love: book.dataValues.love,
+      },
+      { where: { book_id: id } }
+    );
+    if (!bookUpdate) {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return true;
+};
+
+const removeLove = async (id) => {
+  try {
+    const book = await books.findByPk(id);
+    book.dataValues.love -= 1;
+    const bookUpdate = await books.update(
+      {
+        love: book.dataValues.love,
+      },
+      { where: { book_id: id } }
+    );
+    if (!bookUpdate) {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return true;
+};
+
 const remove = async (id) => {
   try {
     return await books.destroy({
@@ -125,4 +182,13 @@ const remove = async (id) => {
   }
 };
 
-module.exports = { getAll, getById, update, add, remove };
+module.exports = {
+  getAll,
+  getById,
+  update,
+  add,
+  remove,
+  addLove,
+  removeLove,
+  addView,
+};

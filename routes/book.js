@@ -6,6 +6,9 @@ const {
   update,
   add,
   remove,
+  addLove,
+  removeLove,
+  addView,
 } = require("../services/book.service");
 
 router.get("/", async (req, res, next) => {
@@ -49,6 +52,51 @@ router.post("/", async (req, res, next) => {
   const result = await add(req.fields, req.files);
   if (result) {
     res.status(201).json({
+      success: true,
+      data: result,
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "Error!",
+    });
+  }
+});
+
+router.post("/add-love/:id", async (req, res, next) => {
+  const result = await addLove(req.params.id);
+  if (result) {
+    res.status(201).json({
+      success: true,
+      data: result,
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "Error!",
+    });
+  }
+});
+
+router.post("/remove-love/:id", async (req, res, next) => {
+  const result = await removeLove(req.params.id);
+  if (result) {
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "Error!",
+    });
+  }
+});
+
+router.post("/add-view/:id", async (req, res, next) => {
+  const result = await addView(req.params.id);
+  if (result) {
+    res.status(200).json({
       success: true,
       data: result,
     });
