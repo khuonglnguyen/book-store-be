@@ -1,12 +1,27 @@
+const Sequelize = require("sequelize");
+const dbConfig = require("../config/db.config.js");
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  host: dbConfig.HOST,
+  dialect: dbConfig.dialect,
+  operatorsAliases: false,
+
+  pool: {
+    max: dbConfig.pool.max,
+    min: dbConfig.pool.min,
+    acquire: dbConfig.pool.acquire,
+    idle: dbConfig.pool.idle,
+  },
+});
 const defaultConfig = require("../config/default.config.js");
 const cloudinaryv2 = require("cloudinary").v2;
 const db = require("../models/index.js");
+const initModels = require("../models/init-models.js");
+const models = initModels(sequelize);
 const books = db.books;
-const sequelize = require("sequelize");
 
 const getAll = async (pageIndex = 1, pageSize = 10, keyword = null) => {
   try {
-    return await books.findAndCountAll({
+    return await models.book.findAndCountAll({
       offset: pageIndex - 1,
       limit: pageSize,
       ...(keyword && {
@@ -16,6 +31,7 @@ const getAll = async (pageIndex = 1, pageSize = 10, keyword = null) => {
           },
         },
       }),
+      include: ["author", "category", "publisher"],
     });
   } catch (error) {
     console.log(error);
