@@ -1,13 +1,10 @@
 var express = require("express");
 var router = express.Router();
-const {
-  getAll,
-  getById,
-} = require("../services/book.service");
+const { getAll, getById } = require("../services/book.service");
 
-router.get("/", async (req, res, next) => {
-  const { pageIndex, pageSize } = req.fields;
-  const result = await getAll(pageIndex, pageSize);
+router.post("/search", async (req, res, next) => {
+  const { pageIndex, pageSize, keyword } = req.fields;
+  const result = await getAll(pageIndex, pageSize, keyword);
   if (result) {
     res.status(200).json({
       success: true,

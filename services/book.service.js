@@ -2,12 +2,20 @@ const defaultConfig = require("../config/default.config.js");
 const cloudinaryv2 = require("cloudinary").v2;
 const db = require("../models/index.js");
 const books = db.books;
+const sequelize = require("sequelize");
 
-const getAll = async (pageIndex = 1, pageSize = 10) => {
+const getAll = async (pageIndex = 1, pageSize = 10, keyword = null) => {
   try {
     return await books.findAndCountAll({
       offset: pageIndex - 1,
       limit: pageSize,
+      ...(keyword && {
+        where: {
+          book_title: {
+            [sequelize.Op.like]: `%${keyword}%`,
+          },
+        },
+      }),
     });
   } catch (error) {
     console.log(error);
