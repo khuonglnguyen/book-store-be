@@ -11,6 +11,7 @@ const publisher = require("./routes/publisher");
 const book = require("./routes/book");
 const order = require("./routes/order");
 const home = require("./routes/home");
+const admin = require("./routes/admin");
 
 const app = express();
 app.use(cors({
@@ -32,5 +33,6 @@ app.use("/api/v1/author", author);
 app.use("/api/v1/publisher", publisher);
 app.use("/api/v1/book", book);
 app.use("/api/v1/order", order);
+app.use("/api/v1/admin", admin);
 
 module.exports = app;

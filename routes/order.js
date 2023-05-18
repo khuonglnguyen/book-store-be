@@ -7,6 +7,8 @@ const {
   remove,
   addDetails,
   getDetailByOrderId,
+  getAllDetail,
+  removeDetail,
 } = require("../services/order.service");
 
 router.get("/", async (req, res, next) => {
@@ -20,6 +22,23 @@ router.get("/", async (req, res, next) => {
         total: result.count,
         pageIndex: pageIndex,
         pageSize: pageSize,
+      },
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "Error!",
+    });
+  }
+});
+
+router.get("/all-detail", async (req, res, next) => {
+  const result = await getAllDetail();
+  if (result) {
+    res.status(200).json({
+      success: true,
+      data: {
+        list: result,
       },
     });
   } else {
@@ -89,6 +108,22 @@ router.post("/", async (req, res, next) => {
 router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
   const result = await remove(id);
+  if (result) {
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } else {
+    res.status(200).json({
+      success: false,
+      message: "Error!",
+    });
+  }
+});
+
+router.delete("/detail/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const result = await removeDetail(id);
   if (result) {
     res.status(200).json({
       success: true,

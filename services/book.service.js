@@ -15,6 +15,55 @@ const getAll = async (pageIndex = 1, pageSize = 10) => {
   }
 };
 
+const getTotal = async () => {
+  try {
+    const book = await books.findAll({ raw: true });
+    return book.length;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+const getTotalView = async () => {
+  try {
+    const book = await books.findAll({ raw: true });
+    let totalView = 0;
+    book.forEach((item) => {
+      totalView += item.view;
+    });
+
+    return totalView;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+const getTotalLove = async () => {
+  try {
+    const book = await books.findAll({ raw: true });
+    let totalLove = 0;
+    book.forEach((item) => {
+      totalLove += item.love;
+    });
+
+    return totalLove;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+const getRaking = async () => {
+  try {
+    return await books.findAll({ order: [["love", "DESC"]] });
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 const getById = async (id) => {
   try {
     return await books.findByPk(id);
@@ -191,4 +240,8 @@ module.exports = {
   addLove,
   removeLove,
   addView,
+  getTotal,
+  getTotalView,
+  getTotalLove,
+  getRaking,
 };
