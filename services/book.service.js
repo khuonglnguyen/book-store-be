@@ -27,7 +27,7 @@ const getAll = async (pageIndex = 1, pageSize = 10, keyword = null) => {
       ...(keyword && {
         where: {
           book_title: {
-            [sequelize.Op.like]: `%${keyword}%`,
+            [Sequelize.Op.like]: `%${keyword}%`,
           },
         },
       }),
