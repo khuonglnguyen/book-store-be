@@ -6,6 +6,7 @@ const getAll = async (pageIndex = 1, pageSize = 10) => {
     return await categories.findAndCountAll({
       offset: pageIndex - 1,
       limit: pageSize,
+      order: [["category_id", "DESC"]],
     });
   } catch (error) {
     console.log(error);

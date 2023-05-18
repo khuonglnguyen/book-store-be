@@ -23,6 +23,7 @@ const getAll = async (pageIndex = 1, pageSize = 10, userId = null) => {
       offset: pageIndex - 1,
       limit: pageSize,
       ...(userId && { where: { user_id: userId } }),
+      order: [["orderdetail_id", "DESC"]],
     });
   } catch (error) {
     console.log(error);

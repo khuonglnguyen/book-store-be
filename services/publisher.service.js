@@ -6,6 +6,7 @@ const getAll = async (pageIndex = 1, pageSize = 10) => {
     return await publishers.findAndCountAll({
       offset: pageIndex - 1,
       limit: pageSize,
+      order: [["publisher_id", "DESC"]],
     });
   } catch (error) {
     console.log(error);

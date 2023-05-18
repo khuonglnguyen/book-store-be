@@ -31,6 +31,7 @@ const getAll = async (pageIndex = 1, pageSize = 10, keyword = null) => {
           },
         },
       }),
+      order: [["book_id", "DESC"]],
       include: ["author", "category", "publisher"],
     });
   } catch (error) {
